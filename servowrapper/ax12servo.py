@@ -3,42 +3,41 @@
 from dynamixel_sdk import *
 
 class PortHandlerWrapper():
-    def __init__(self, dev, baudRate):
-        self.dev = dev
-        self.baudRate = baudRate
-    def __enter__(self):
-        #ttysetattr etc goes here before opening and returning the file object
-        self.portHandler = PortHandler(self.dev)
-        max_timeout = 10
-        count = 0
-        while (not self.portHandler.openPort()) and (max_timeout >= count):
-          print("Failed to open the port.")
-          print("Trying again...")
-          count += 1
-          sleep(1)
-        if max_timeout < count:
-          print("Timeout on openning the port.")
-          raise
-        count = 0
-        if (not self.portHandler.setBaudRate(self.baudRate)) and (max_timeout >= count):
-          print("Failed to change the baudrate")
-          print("Trying again...")
-          count += 1
-          sleep(1)
-        if max_timeout < count:
-          print("Timeout on setting baudrate.")
-          raise
-        return self.portHandler
-    def __exit__(self, type, value, traceback):
-        #Exception handling here
-        self.portHandler.closePort()
+
+  def __init__(self, devicename, baudrate):
+    self.devicename = devicename
+    self.baudrate = baudrate
+
+  def __enter__(self):
+    #ttysetattr etc goes here before opening and returning the file object
+    self.portHandler = PortHandler(self.devicename)
+    max_timeout = 10
+    count = 0
+    while (not self.portHandler.openPort()) and (max_timeout >= count):
+      print("Failed to open the port.")
+      print("Trying again...")
+      count += 1
+      sleep(1)
+    if max_timeout < count:
+      print("Timeout on openning the port.")
+      raise
+    count = 0
+    if (not self.portHandler.setBaudRate(self.baudrate)) and (max_timeout >= count):
+      print("Failed to change the baudrate")
+      print("Trying again...")
+      count += 1
+      sleep(1)
+    if max_timeout < count:
+      print("Timeout on setting baudrate.")
+      raise
+    return self.portHandler
+
+  def __exit__(self, type, value, traceback):
+    #Exception handling here
+    self.portHandler.closePort()
 
 
 class AX12Servo:
-
-  PROTOCOL_VERSION            = 1.0
-  BAUDRATE                    = 1000000
-  DEVICENAME                  = '/dev/ttyUSB0'
 
   ADDR_MX_TORQUE_ENABLE      = 18
   ADDR_MX_GOAL_POSITION      = 30
@@ -48,7 +47,7 @@ class AX12Servo:
   DXL_MAXIMUM_POSITION_VALUE  = 1000
   DXL_MOVING_STATUS_THRESHOLD = 10
 
-  def __init__(self, portHandlerWrapper, packetHandler):
+  def __init__(self, id, portHandlerWrapper, packetHandler):
     self.portHandlerWrapper = portHandlerWrapper
     self.packetHandler = packetHandler
     self.DXL_ID = id
