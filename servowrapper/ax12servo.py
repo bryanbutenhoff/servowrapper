@@ -48,9 +48,9 @@ class AX12Servo:
   DXL_MAXIMUM_POSITION_VALUE  = 1000
   DXL_MOVING_STATUS_THRESHOLD = 10
 
-  def __init__(self, id):
-    self.portHandlerWrapper = PortHandlerWrapper(self.DEVICENAME, self.BAUDRATE)
-    self.packetHandler = PacketHandler(self.PROTOCOL_VERSION)
+  def __init__(self, portHandlerWrapper, packetHandler):
+    self.portHandlerWrapper = portHandlerWrapper
+    self.packetHandler = packetHandler
     self.DXL_ID = id
 
   def check_comm_result(self, dxl_comm_result, dxl_error):
