@@ -39,6 +39,9 @@ class PortHandlerWrapper():
 
 class AX12Servo:
 
+  DISABLE_TORQUE = 0
+  ENABLE_TORQUE = 1
+
   ADDR_MX_TORQUE_ENABLE      = 18
   ADDR_MX_GOAL_POSITION      = 30
   ADDR_MX_PRESENT_POSITION   = 36
@@ -81,10 +84,10 @@ class AX12Servo:
     return dxl_response
 
   def enable_torque(self):
-    self.write_one_byte(self.ADDR_MX_TORQUE_ENABLE, 1)
+    self.write_one_byte(self.ADDR_MX_TORQUE_ENABLE, self.ENABLE_TORQUE)
 
   def disable_torque(self):
-    self.write_one_byte(self.ADDR_MX_TORQUE_ENABLE, 0)
+    self.write_one_byte(self.ADDR_MX_TORQUE_ENABLE, self.DISABLE_TORQUE)
 
   def set_goal_position(self, goal_position):
     self.write_two_bytes(self.ADDR_MX_GOAL_POSITION, goal_position)
