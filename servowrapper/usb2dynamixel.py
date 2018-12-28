@@ -39,7 +39,9 @@ class PortHandlerWrapper():
 class Usb2Dynamixel:
 
   def __init__(self, device_name, baud_rate, protocol_version):
-    self.portHandler = PortHandler(device_name, baud_rate)
+    self.portHandler = PortHandler(device_name)
+    self.portHandler.openPort()
+    self.portHandler.setBaudRate(baud_rate)
     self.packetHandler = PacketHandler(protocol_version)
     self.servo_list = {}
 
