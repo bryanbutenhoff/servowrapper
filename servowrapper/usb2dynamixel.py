@@ -110,7 +110,7 @@ class AX12Servo:
     return self.read_two_bytes(self.ADDR_MX_PRESENT_POSITION)
 
   def execute(self, command, data):
-    if hasattr(data, 'data')
+    if hasattr(data, 'data'):
       command_list = {
         "set_goal_position": self.set_goal_position,
       }
