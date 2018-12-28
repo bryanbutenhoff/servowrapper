@@ -120,4 +120,4 @@ class AX12Servo:
     if len(data) == 0:
       return my_command()
     else:
-      return my_command(data)
+      return my_command(data.data)
