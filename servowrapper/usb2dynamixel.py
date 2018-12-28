@@ -1,5 +1,6 @@
 #!/usr/bin/env python
 
+from functools import partial
 from dynamixel_sdk import *
 
 class PortHandlerWrapper():
@@ -114,7 +115,7 @@ class AX12Servo:
     return self.read_two_bytes(self.ADDR_MX_PRESENT_POSITION)
 
   def execute(self, command, data):
-    my_command = self.command_list.get(command, lambda: print("Unknown method"))
+    my_command = self.command_list.get(command, partial(print, "Unknown method"))
     if len(data) == 0:
       my_command()
     else:
