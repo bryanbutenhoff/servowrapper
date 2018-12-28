@@ -66,8 +66,8 @@ class AX12Servo:
   DXL_MAXIMUM_POSITION_VALUE  = 1000
   DXL_MOVING_STATUS_THRESHOLD = 10
 
-  def __init__(self, id, portHandlerWrapper, packetHandler):
-    self.portHandlerWrapper = portHandlerWrapper
+  def __init__(self, id, portHandler, packetHandler):
+    self.portHandler = portHandler
     self.packetHandler = packetHandler
     self.DXL_ID = id
 
@@ -78,24 +78,20 @@ class AX12Servo:
       print("%s" % self.packetHandler.getRxPacketError(dxl_error))
 
   def write_one_byte(self, address, value):
-    with self.portHandlerWrapper as portHandler:
-      dxl_comm_result, dxl_error = self.packetHandler.write1ByteTxRx(portHandler, self.DXL_ID, address, value)
+    dxl_comm_result, dxl_error = self.packetHandler.write1ByteTxRx(self.portHandler, self.DXL_ID, address, value)
     self.check_comm_result(dxl_comm_result, dxl_error)
 
   def write_two_bytes(self, address, value):
-    with self.portHandlerWrapper as portHandler:
-      dxl_comm_result, dxl_error = self.packetHandler.write2ByteTxRx(portHandler, self.DXL_ID, address, value)
+    dxl_comm_result, dxl_error = self.packetHandler.write2ByteTxRx(self.portHandler, self.DXL_ID, address, value)
     self.check_comm_result(dxl_comm_result, dxl_error)
 
   def read_one_bytes(self, address):
-    with self.portHandlerWrapper as portHandler:
-      dxl_response, dxl_comm_result, dxl_error = self.packetHandler.read1ByteTxRx(portHandler, self.DXL_ID, address)
+    dxl_response, dxl_comm_result, dxl_error = self.packetHandler.read1ByteTxRx(self.portHandler, self.DXL_ID, address)
     self.check_comm_result(dxl_comm_result, dxl_error)
     return dxl_response
 
   def read_two_bytes(self, address):
-    with self.portHandlerWrapper as portHandler:
-      dxl_response, dxl_comm_result, dxl_error = self.packetHandler.read2ByteTxRx(portHandler, self.DXL_ID, address)
+    dxl_response, dxl_comm_result, dxl_error = self.packetHandler.read2ByteTxRx(self.portHandler, self.DXL_ID, address)
     self.check_comm_result(dxl_comm_result, dxl_error)
     return dxl_response
 
