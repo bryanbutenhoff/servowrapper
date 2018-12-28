@@ -1,1 +1,1 @@
-from ax12servo import *
+from usb2dynamixel import *
