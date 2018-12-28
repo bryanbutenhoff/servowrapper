@@ -39,12 +39,12 @@ class PortHandlerWrapper():
 class Usb2Dynamixel:
 
   def __init__(self, device_name, baud_rate, protocol_version):
-    self.portHandlerWrapper = PortHandlerWrapper(device_name, baud_rate)
+    self.portHandler = PortHandler(device_name, baud_rate)
     self.packetHandler = PacketHandler(protocol_version)
     self.servo_list = {}
 
   def add_AX12(self, id):
-    self.servo_list[id] = AX12Servo(id, self.portHandlerWrapper, self.packetHandler)
+    self.servo_list[id] = AX12Servo(id, self.portHandler, self.packetHandler)
 
   def execute(self, id, command, data = ''):
     ret_val = self.servo_list[id].execute(command, data)
