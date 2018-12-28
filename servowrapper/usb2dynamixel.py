@@ -53,10 +53,10 @@ class Usb2Dynamixel:
 class AX12Servo:
 
   command_list = {
-    "enable_torque": self.enable_torque,
-    "disable_torque": self.disable_torque,
-    "set_goal_position": self.set_goal_position,
-    "get_present_position": self.get_present_position
+    "enable_torque": enable_torque,
+    "disable_torque": disable_torque,
+    "set_goal_position": set_goal_position,
+    "get_present_position": get_present_position
   }
 
   DISABLE_TORQUE = 0
