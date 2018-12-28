@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 
 from functools import partial
+from __future__ import print_function
 from dynamixel_sdk import *
 
 class PortHandlerWrapper():
