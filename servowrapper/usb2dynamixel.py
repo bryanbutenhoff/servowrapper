@@ -114,7 +114,7 @@ class AX12Servo:
       "set_goal_position": self.set_goal_position,
       "get_present_position": self.get_present_position
     }
-    my_command = self.command_list.get(command, partial(print, "Unknown method"))
+    my_command = command_list.get(command, partial(print, "Unknown method"))
     if len(data) == 0:
       my_command()
     else:
