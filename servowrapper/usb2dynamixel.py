@@ -47,7 +47,9 @@ class Usb2Dynamixel:
     self.servo_list[id] = AX12Servo(id, self.portHandlerWrapper, self.packetHandler)
 
   def execute(self, id, command, data = ''):
-    self.servo_list[id].execute(command, data)
+    ret_val = self.servo_list[id].execute(command, data)
+    print(ret_val)
+    return ret_val
 
 class AX12Servo:
 
@@ -116,6 +118,6 @@ class AX12Servo:
     }
     my_command = command_list.get(command, partial(print, "Unknown method"))
     if len(data) == 0:
-      my_command()
+      return my_command()
     else:
-      my_command(data)
+      return my_command(data)
