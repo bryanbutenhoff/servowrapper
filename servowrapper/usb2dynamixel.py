@@ -9,7 +9,6 @@ class PortHandlerWrapper():
     self.baudrate = baudrate
 
   def __enter__(self):
-    #ttysetattr etc goes here before opening and returning the file object
     self.portHandler = PortHandler(self.devicename)
     max_timeout = 10
     count = 0
@@ -33,7 +32,6 @@ class PortHandlerWrapper():
     return self.portHandler
 
   def __exit__(self, type, value, traceback):
-    #Exception handling here
     self.portHandler.closePort()
 
 class Usb2Dynamixel:
@@ -47,8 +45,8 @@ class Usb2Dynamixel:
   def add_AX12(self, id):
     servo_list[id] = AX12Servo(id, self.portHandlerWrapper, self.packetHandler)
 
-  def execute(self, id, command):
-    servo_list[id].execute(command)
+  def execute(self, id, command, data = ''):
+    servo_list[id].execute(command, data)
 
 class AX12Servo:
 
