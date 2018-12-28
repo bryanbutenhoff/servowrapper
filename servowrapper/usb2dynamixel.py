@@ -110,14 +110,17 @@ class AX12Servo:
     return self.read_two_bytes(self.ADDR_MX_PRESENT_POSITION)
 
   def execute(self, command, data):
-    command_list = {
-      "enable_torque": self.enable_torque,
-      "disable_torque": self.disable_torque,
-      "set_goal_position": self.set_goal_position,
-      "get_present_position": self.get_present_position
-    }
-    my_command = command_list.get(command, partial(print, "Unknown method"))
     if len(data) == 0:
+      command_list = {
+        "enable_torque": self.enable_torque,
+        "disable_torque": self.disable_torque,
+        "get_present_position": self.get_present_position
+      }
+      my_command = command_list.get(command, partial(print, "Unknown method"))
       return my_command()
     else:
+      command_list = {
+        "set_goal_position": self.set_goal_position,
+      }
+      my_command = command_list.get(command, partial(print, "Unknown method with data: {}".format(data.data)))
       return my_command(data.data)
